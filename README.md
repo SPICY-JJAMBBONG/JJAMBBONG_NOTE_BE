@@ -1,0 +1,2 @@
+# JJAMBBONG_NOTE_BE
+짬뽕노트 백엔드
