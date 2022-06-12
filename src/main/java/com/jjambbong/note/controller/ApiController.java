@@ -2,6 +2,7 @@ package com.jjambbong.note.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @AllArgsConstructor
 public class ApiController {
 
-    @GetMapping("/document")
-    public String document() {
-        return "document";
+    @GetMapping(path = "/document")
+    public String document(Model model) {
+        return "index";
     }
-    
+
 }
