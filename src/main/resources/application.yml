@@ -1,10 +1,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/jb?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: root
+    url: jdbc:mysql://q7zxuqq7scep5yvd:nr9m6e4jpi5jgo4s@eyvqcfxf5reja3nv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qu98bbr433gipj7o
+    username: q7zxuqq7scep5yvd
+    password: nr9m6e4jpi5jgo4s
 
+  data:
+    mongodb:
+      uri: mongodb+srv://jjambbong:jjambbong2022@jjambbongmongodb.jnmir.mongodb.net/?retryWrites=true
+      database: testdb
+      
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
