@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: {mysql_url}
-    username: {mysql_username}
-    password: {mysql_password}
+    url: ${mysql_url}
+    username: ${mysql_username}
+    password: ${mysql_password}
 
   data:
     mongodb:
-      uri: {mongodb_uri}
+      uri: ${mongodb_uri}
       database: testdb
       
   jpa:
