@@ -51,6 +51,6 @@ $(function () {
     });
 });
 
-$(window).unload(function() {
+$(window).on("beforeunload", function() {
     disconnect();
 })
