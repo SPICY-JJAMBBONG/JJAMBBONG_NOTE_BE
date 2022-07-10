@@ -224,6 +224,9 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# .env configuration file
+src/main/resources/env.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/gradle
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,macos,windows
