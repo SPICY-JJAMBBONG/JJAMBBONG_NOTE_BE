@@ -18,7 +18,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/receive', function (document) {
+        stompClient.subscribe('/topic/receive/test', function (document) {
             let data = JSON.parse(document.body).content
             let content = JSON.parse(data).content
             $("#test").val(content)
@@ -37,7 +37,7 @@ function disconnect() {
 function sendContent() {
     let content = JSON.stringify({'content': $("#test").val()})
     console.log(content)
-    stompClient.send("/topic/send", {}, content);
+    stompClient.send("/topic/send/test", {}, content);
 }
 
 

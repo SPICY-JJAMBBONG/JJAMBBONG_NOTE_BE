@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebSocketController {
 
-    @MessageMapping("/topic/send")
-    @SendTo("/topic/receive")
+    @MessageMapping("/topic/send/test")
+    @SendTo("/topic/receive/test")
     public Document test(String content) throws Exception {
         System.out.println("received");
         return new Document(content);
