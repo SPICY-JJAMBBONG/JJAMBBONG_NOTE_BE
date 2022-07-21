@@ -33,7 +33,14 @@ public class MemberController {
                 .build();
         Long id = memberServiceImpl.registerMember(member);
         return new RegisterMemberResponse(id);
-    }
+    };
+
+    @GetMapping(path = "/api/auth/user/{userId}")
+    public
+
+    @PutMapping(path = "/api/auth/user/{userId}")
+
+    @DeleteMapping(path = "/api/auth/user/{userId}")
 
     @Data
     static class RegisterMemberRequest {
