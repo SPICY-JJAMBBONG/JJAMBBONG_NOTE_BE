@@ -1,5 +1,6 @@
 package com.jjambbong.note.controller;
 
+import com.jjambbong.note.dto.MemberDto;
 import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.service.MemberService;
 import com.jjambbong.note.serviceImpl.MemberServiceImpl;
@@ -22,12 +23,12 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping(path = "/api/auth/registration")
-    public RegisterMemberResponse registerMember(RegisterMemberRequest request){
+    public RegisterMemberResponse registerMember(MemberDto memberDto){
 
         Member member = Member.builder()
-                .email(request.getEmail())
-                .password(request.getPassword())
-                .name(request.getName())
+                .email(memberDto.getEmail())
+                .password(memberDto.getPassword())
+                .name(memberDto.getName())
                 .createdDate(LocalDate.now())
                 .build();
 
@@ -42,13 +43,6 @@ public class MemberController {
 //
 //    @DeleteMapping(path = "/api/auth/user/{userId}")
 
-    @Data
-    static class RegisterMemberRequest {
-        private String email;
-        private String password;
-        private String name;
-        private LocalDate createdDate;
-    }
 
     @Data
     static class RegisterMemberResponse {
