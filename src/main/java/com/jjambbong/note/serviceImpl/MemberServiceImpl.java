@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService{
     // 회원 조회
     @Override
     @Transactional(readOnly = true)
-    public Member findMember(Long memberId) {
+    public Optional<Member> findMember(Long memberId) {
         return memberRepository.findById(memberId);
     }
 
@@ -38,7 +38,7 @@ public class MemberServiceImpl implements MemberService{
     public void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
-        if (!findMember.isEmpty()) {
+        if (findMember != null) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
 
