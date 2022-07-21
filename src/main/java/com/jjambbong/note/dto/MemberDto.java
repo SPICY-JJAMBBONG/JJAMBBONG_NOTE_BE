@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,8 +22,9 @@ public class MemberDto {
         return em.find(Member.class, id);
     }
 
-    public Member findByEmail(String email) {
-        System.out.println("findByEmail");
-        return em.find(Member.class, email);
+    public List<Member> findByEmail(String email) {
+        return em.createQuery("select m from Member m where m.email = :email", Member.class)
+                .setParameter("email", email)
+                .getResultList();
     }
 }

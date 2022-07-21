@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -20,10 +22,7 @@ public class MemberServiceImpl {
     // 회원 가입
     @Transactional
     public Long registerMember(Member member) {
-        System.out.println("registerMember");
-        System.out.println(member.getMemberId());
         validateDuplicateMember(member);
-        System.out.println("중복 회원 검사 완료");
         memberDto.save(member);
         return member.getMemberId();
     }
@@ -37,9 +36,9 @@ public class MemberServiceImpl {
     // 중복 회원 검색
     public void validateDuplicateMember(Member member) {
         System.out.println("중복 회원 검사 시작");
-        Member findMember = memberDto.findByEmail(member.getEmail());
+        List<Member> findMember = memberDto.findByEmail(member.getEmail());
 
-        if (findMember != null) {
+        if (!findMember.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
 
