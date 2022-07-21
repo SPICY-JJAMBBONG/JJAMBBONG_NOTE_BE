@@ -12,4 +12,8 @@ public interface MemberService{
 
     public Member findMember();
 
+    public Member updateMember();
+
+    public Long deleteMember();
+
 }
