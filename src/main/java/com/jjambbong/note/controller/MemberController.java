@@ -19,27 +19,28 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberServiceImpl memberServiceImpl;
+    private final MemberService memberService;
 
     @PostMapping(path = "/api/auth/registration")
-    public RegisterMemberResponse registerMember(@RequestBody @Validated RegisterMemberRequest request){
+    public RegisterMemberResponse registerMember(RegisterMemberRequest request){
 
         Member member = Member.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .name(request.getName())
-                .createdDate(request.getCreatedDate())
+                .createdDate(LocalDate.now())
                 .build();
-        Long id = memberServiceImpl.registerMember(member);
+
+        Long id = memberService.registerMember(member);
         return new RegisterMemberResponse(id);
     };
 
-    @GetMapping(path = "/api/auth/user/{userId}")
-    public
-
-    @PutMapping(path = "/api/auth/user/{userId}")
-
-    @DeleteMapping(path = "/api/auth/user/{userId}")
+//    @GetMapping(path = "/api/auth/user/{userId}")
+//    public
+//
+//    @PutMapping(path = "/api/auth/user/{userId}")
+//
+//    @DeleteMapping(path = "/api/auth/user/{userId}")
 
     @Data
     static class RegisterMemberRequest {

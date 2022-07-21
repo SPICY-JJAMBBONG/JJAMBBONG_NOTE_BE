@@ -12,14 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @Transactional
+@Component
 @RequiredArgsConstructor
-public class MemberServiceImpl {
+public class MemberServiceImpl implements MemberService{
 
     private final MemberDto memberDto;
 
     // 회원 가입
+    @Override
     @Transactional
     public Long registerMember(Member member) {
         validateDuplicateMember(member);
@@ -28,9 +29,10 @@ public class MemberServiceImpl {
     }
 
     // 회원 조회
+    @Override
     @Transactional(readOnly = true)
     public Member findMember(Long memberId) {
-        return memberDto.findOne(memberId);
+        return memberDto.findById(memberId);
     }
 
     // 중복 회원 검색
@@ -42,5 +44,15 @@ public class MemberServiceImpl {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
 
+    }
+
+    @Override
+    public Member updateMember() {
+        return null;
+    }
+
+    @Override
+    public Long deleteMember() {
+        return null;
     }
 }
