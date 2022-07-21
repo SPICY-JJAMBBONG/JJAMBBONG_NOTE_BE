@@ -3,12 +3,11 @@ package com.jjambbong.note.entity;
 import java.time.LocalDate;
 import javax.persistence.*;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
+@Builder
 @Data
 @Table(name = "tb_member")
 public class Member {
