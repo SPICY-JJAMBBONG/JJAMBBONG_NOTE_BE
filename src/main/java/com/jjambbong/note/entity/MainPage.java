@@ -10,12 +10,11 @@ import javax.persistence.*;
 @IdClass(MainPagePK.class)
 public class MainPage {
 
-    @Id
-    @Column(name = "member_id")
-    private Long memberId;
+	@Id
+	@Column(name = "member_id")
+	private Long memberId;
 
-    @Id
-    @Column(name = "block_id")
-    private Long blockId;
-
+	@Id
+	@Column(name = "block_id")
+	private Long blockId;
 }
