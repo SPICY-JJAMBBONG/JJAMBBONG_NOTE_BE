@@ -7,8 +7,7 @@ import java.io.Serializable;
 @Data
 public class MainPagePK implements Serializable {
 
-    private Long memberId;
+	private Long memberId;
 
-    private String blockId;
-
+	private String blockId;
 }
