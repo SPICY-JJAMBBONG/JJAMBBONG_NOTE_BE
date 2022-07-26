@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @Entity
 @RequiredArgsConstructor
-public class Document_test {
+public class Document {
 
 	@Id
 	@GeneratedValue
@@ -17,5 +17,4 @@ public class Document_test {
 
 	@NonNull
 	private String content;
-
 }

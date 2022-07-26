@@ -11,12 +11,20 @@ spring:
       database: jjambbong
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
-    show-sql: true
     hibernate:
-      format_sql: true
-      ddl-auto: create
+      ddl-auto: create  # 데이터 베이스 초기화 전략
+      # none: 사용하지 않음
+      # create: 기존 테이블 삭제 후 테이블 생성
+      # create-drop: 기존 테이블 삭제 후 테이블 생성. 종료 시점에 테이블 삭제
+      # update: 변경된 스키마 적용(컬럼 삭제는 되지 않음. 컬럼 추가만 반영)
+      # validate: 엔티티와 테이블 정상 매핑 확인
+      # 개발 단계에서는 create, create-drop, update 사용, 운영 단게에서 none, validate 사용
+    properties:
+      hibernate:
+        show-sql: true # 실행되는 쿼리 콘솔에 출력
+        format_sql: true # 콘솔창에 출력되는 쿼리를 가독성이 좋게 포맷팅
 
   devtools:
     livereload:
@@ -31,4 +39,3 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
-
