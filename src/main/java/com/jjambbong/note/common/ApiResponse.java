@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ApiResponse {
+public class ApiResponse<T> {
 	private ResponseCode code;
-	private String message;
+	private T message;
 
 	public ApiResponse(Exception e) {
 		code = ResponseCode.UNKNOWN;
-		message = ResponseCode.UNKNOWN.getMessage();
+		message = (T) ResponseCode.UNKNOWN.getMessage();
 	}
 }
