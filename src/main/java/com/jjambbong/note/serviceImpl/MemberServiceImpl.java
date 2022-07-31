@@ -2,6 +2,7 @@ package com.jjambbong.note.serviceImpl;
 
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
+import com.jjambbong.note.dto.MemberDto;
 import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.repository.MemberRepository;
 import com.jjambbong.note.service.MemberService;
@@ -52,8 +53,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member updateMember() {
-		return null;
+	public ApiResponse updateMember(MemberDto memberDto, Long memberId) {
+		Member member = memberRepository.getMemberByMemberId(memberId);
+
+		member.setName(memberDto.getName());
+		member.setRole(memberDto.getRole());
+
+		memberRepository.save(member);
+
+		return new ApiResponse(ResponseCode.SUCCESS, member.getMemberId().toString());
 	}
 
 	@Override
