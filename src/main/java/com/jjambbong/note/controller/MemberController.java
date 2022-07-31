@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,7 +25,6 @@ public class MemberController {
 				.password(memberDto.getPassword())
 				.name(memberDto.getName())
 				.build();
-		System.out.println("member = " + member);
 
 		ApiResponse response;
 		try {
@@ -35,13 +35,19 @@ public class MemberController {
 		return response;
 	}
 
+  @PutMapping(path = "/api/auth/user/{userId}")
+	public ApiResponse updateMember(MemberDto memberDto, @PathVariable Long userId) {
+		ApiResponse response = memberService.updateMember(memberDto, userId);
+		return response;
+	}
+
+
 	@GetMapping(path = "/api/auth/user/{memberId}")
 	public ApiResponse getMember(@PathVariable Long memberId) {
 		return memberService.getMemberFromMemberId(memberId);
 	}
 
-//    @PutMapping(path = "/api/auth/user/{userId}")
-//
+
 //    @DeleteMapping(path = "/api/auth/user/{userId}")
 
 	@Data
