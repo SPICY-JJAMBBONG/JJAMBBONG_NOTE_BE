@@ -6,6 +6,8 @@ import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,17 +26,23 @@ public class MemberController {
 				.build();
 		System.out.println("member = " + member);
 
-		ApiResponse response = memberService.registerMember(member);
+		ApiResponse response;
+		try {
+			response = memberService.registerMember(member);
+		} catch (Exception e) {
+			response = new ApiResponse();
+		}
 		return response;
 	}
 
-//    @GetMapping(path = "/api/auth/user/{userId}")
-//    public
-//
+	@GetMapping(path = "/api/auth/user/{memberId}")
+	public ApiResponse getMember(@PathVariable Long memberId) {
+		return memberService.getMemberFromMemberId(memberId);
+	}
+
 //    @PutMapping(path = "/api/auth/user/{userId}")
 //
 //    @DeleteMapping(path = "/api/auth/user/{userId}")
-
 
 	@Data
 	static class RegisterMemberResponse {
@@ -44,5 +52,4 @@ public class MemberController {
 			this.id = id;
 		}
 	}
-
 }

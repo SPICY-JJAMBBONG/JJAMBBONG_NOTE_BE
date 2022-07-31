@@ -13,4 +13,9 @@ import lombok.NoArgsConstructor;
 public class ApiResponse {
 	private ResponseCode code;
 	private String message;
+
+	public ApiResponse(Exception e) {
+		code = ResponseCode.UNKNOWN;
+		message = ResponseCode.UNKNOWN.getMessage();
+	}
 }

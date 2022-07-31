@@ -11,7 +11,7 @@ public class WebSocketController {
 	@MessageMapping("/topic/send/test")
 	@SendTo("/topic/receive/test")
 	public Document test(String content) throws Exception {
-		System.out.println("received");
+		System.out.println("received content = " + content);
 		return new Document(content);
 	}
 }
