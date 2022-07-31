@@ -6,7 +6,9 @@ import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,16 +24,18 @@ public class MemberController {
 				.password(memberDto.getPassword())
 				.name(memberDto.getName())
 				.build();
-		System.out.println("member = " + member);
 
 		ApiResponse response = memberService.registerMember(member);
 		return response;
 	}
 
-//    @GetMapping(path = "/api/auth/user/{userId}")
-//    public
-//
-//    @PutMapping(path = "/api/auth/user/{userId}")
+
+    @PutMapping(path = "/api/auth/user/{userId}")
+	public ApiResponse updateMember(MemberDto memberDto, @PathVariable Long userId) {
+		ApiResponse response = memberService.updateMember(memberDto, userId);
+		return response;
+	}
+
 //
 //    @DeleteMapping(path = "/api/auth/user/{userId}")
 
