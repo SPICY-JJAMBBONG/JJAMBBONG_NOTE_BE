@@ -17,4 +17,5 @@ public interface MemberService {
 
 	public Long deleteMember();
 
+	public ApiResponse getMemberFromMemberId(Long memberId);
 }
