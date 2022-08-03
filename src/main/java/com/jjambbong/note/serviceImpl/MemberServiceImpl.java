@@ -1,18 +1,20 @@
 package com.jjambbong.note.serviceImpl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
 import com.jjambbong.note.dto.MemberDto;
 import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.repository.MemberRepository;
 import com.jjambbong.note.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @Transactional
 @Component
@@ -20,7 +22,6 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
-
 
 	// 회원 가입
 	@Override
@@ -64,8 +65,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Long deleteMember() {
-		return null;
+	public ApiResponse deleteMember(Long memberId) {
+		Optional<Member> member = findMember(memberId);
+
+		if (member.isEmpty()) {
+			return new ApiResponse<>(ResponseCode.UNKNOWN_USER, ResponseCode.UNKNOWN_USER.getMessage());
+		} else {
+			try {
+				memberRepository.deleteById(memberId);
+			} catch (Exception e) {
+				return new ApiResponse<>(e);
+			}
+			return new ApiResponse<>(ResponseCode.SUCCESS, memberId);
+		}
 	}
 
 	@Override
