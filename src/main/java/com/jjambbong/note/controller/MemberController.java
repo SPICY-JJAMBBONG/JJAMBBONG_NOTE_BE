@@ -39,9 +39,9 @@ public class MemberController {
 		return response;
 	}
 
-	@PutMapping(path = "/api/auth/user/{userId}")
-	public ApiResponse updateMember(MemberDto memberDto, @PathVariable Long userId) {
-		ApiResponse response = memberService.updateMember(memberDto, userId);
+	@PutMapping(path = "/api/auth/user/{memberId}")
+	public ApiResponse updateMember(MemberDto memberDto, @PathVariable Long memberId) {
+		ApiResponse response = memberService.updateMember(memberDto, memberId);
 		return response;
 	}
 
