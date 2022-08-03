@@ -17,7 +17,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
-        console.log('Connected: ' + frame);
+        // /topic/receive/test에 구독 하고 있는 페이지들에 데이터 전송
         stompClient.subscribe('/topic/receive/test', function (document) {
             let data = JSON.parse(document.body).content
             let content = JSON.parse(data).content
@@ -36,7 +36,7 @@ function disconnect() {
 
 function sendContent() {
     let content = JSON.stringify({'content': $("#test").val()})
-    console.log(content)
+    // /topic/send 경로로 websocket 호출
     stompClient.send("/topic/send/test", {}, content);
 }
 
@@ -44,8 +44,8 @@ function sendContent() {
 $(function () {
     connect();
     $("#test").on('change', function (e) {
-        console.log("send")
         e.preventDefault();
+        // text 박스에서 포커스 떼는 순간 sendContent function trigger
         sendContent();
 
     });

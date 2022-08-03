@@ -1,10 +1,12 @@
 package com.jjambbong.note.service;
 
-import com.jjambbong.note.common.ApiResponse;
-import com.jjambbong.note.entity.Member;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.jjambbong.note.common.ApiResponse;
+import com.jjambbong.note.dto.MemberDto;
+import com.jjambbong.note.entity.Member;
 
 @Service
 public interface MemberService {
@@ -13,8 +15,9 @@ public interface MemberService {
 
 	public Optional<Member> findMember(Long memberId);
 
-	public Member updateMember();
+	public ApiResponse updateMember(MemberDto memberDto, Long memberId);
 
-	public Long deleteMember();
+	public ApiResponse deleteMember(Long memberId);
 
+	public ApiResponse getMemberFromMemberId(Long memberId);
 }
