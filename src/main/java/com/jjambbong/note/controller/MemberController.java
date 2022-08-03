@@ -6,11 +6,7 @@ import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.service.MemberService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,12 +31,11 @@ public class MemberController {
 		return response;
 	}
 
-  @PutMapping(path = "/api/auth/user/{userId}")
+	@PutMapping(path = "/api/auth/user/{userId}")
 	public ApiResponse updateMember(MemberDto memberDto, @PathVariable Long userId) {
 		ApiResponse response = memberService.updateMember(memberDto, userId);
 		return response;
 	}
-
 
 	@GetMapping(path = "/api/auth/user/{memberId}")
 	public ApiResponse getMember(@PathVariable Long memberId) {

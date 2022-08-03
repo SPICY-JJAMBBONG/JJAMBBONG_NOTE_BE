@@ -82,6 +82,6 @@ public class MemberServiceImpl implements MemberService {
 		map.put("role", findMember.getRole());
 		JSONObject jsonMember = new JSONObject(map);
 
-		return new ApiResponse(ResponseCode.SUCCESS, jsonMember.toJSONString());
+		return new ApiResponse(ResponseCode.SUCCESS, findMember);
 	}
 }
