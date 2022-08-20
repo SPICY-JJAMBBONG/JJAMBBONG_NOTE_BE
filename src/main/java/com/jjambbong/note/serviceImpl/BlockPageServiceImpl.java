@@ -1,5 +1,6 @@
 package com.jjambbong.note.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jjambbong.note.common.ApiResponse;
+import com.jjambbong.note.common.ResponseCode;
+import com.jjambbong.note.common.error.exception.BusinessException;
+import com.jjambbong.note.common.error.exception.blockPage.BlockPageErrorCode;
+import com.jjambbong.note.common.error.exception.blockPage.BlockPageNotFoundException;
+import com.jjambbong.note.dto.BlockPageDto;
 import com.jjambbong.note.entity.BlockPage;
 import com.jjambbong.note.repository.BlockPageRepository;
 import com.jjambbong.note.service.BlockPageService;
@@ -23,62 +30,58 @@ public class BlockPageServiceImpl implements BlockPageService {
 
 	@Transactional
 	@Override
-	public UUID createBlockPage(BlockPage blockPage, String currentPageId) {
-		UUID uuid = blockPageRepository.save(blockPage).getBlockId(); // 새로 생성 + 생성한 id 가져오기
-
-		if (currentPageId != null) { //하위 페이지 만들기 : 현재 tb_block_page-pageList에 1번 id추가
-			Optional<BlockPage> optionalBlockPage = blockPageRepository.findById(UUID.fromString(currentPageId));
-
-			if (optionalBlockPage.isPresent()) {
-
-				BlockPage upperBlockPage = optionalBlockPage.get();
-				upperBlockPage.getBlockList();
-			}
-
-		} else { //메인 페이지 만들기 : tb_main_page에 추가 >>> member_id는 어떻게 가져오지???
-
+	public ApiResponse<String> createBlockPage(BlockPage blockPage) {
+		try {
+			System.out.println(blockPageRepository.save(blockPage));
+			String blockId = blockPageRepository.save(blockPage).getId();
+			return new ApiResponse<>(ResponseCode.SUCCESS, blockId);
+		} catch (Exception e) {
+			throw new BusinessException(BlockPageErrorCode.UNKNOWN, e.getMessage());
 		}
-
-		return uuid;
 	}
 
 	@Override
-	public Optional<BlockPage> findById(String id) {
-		return blockPageRepository.findById(UUID.fromString(id));
+	public Optional<BlockPage> findById(String blockId) {
+		return blockPageRepository.findById(blockId);
+	}
+
+	@Override
+	public ApiResponse updateBlockPage(BlockPageDto blockPageDto, String blockId) {
+
+		Optional<BlockPage> blockPageList = blockPageRepository.findById(blockId);
+
+		Long order = blockPageDto.getOrder();
+		System.out.println("order = " + order);
+		System.out.println("blockPageDto = " + blockPageDto);
+
+		if(blockPageList.isEmpty()){
+			throw new BlockPageNotFoundException(blockId);
+		}else{
+			BlockPage blockPage = blockPageList.get();
+			blockPage.setBlockList(blockPageDto.getBlock_list());
+			// blockPage.setOrder( (blockPageDto.getOrder() == null) ? blockPage.getOrder() : blockPageDto.getOrder());
+			blockPage.setOrder(blockPageDto.getOrder());
+			blockPage.setTitle(blockPageDto.getTitle());
+			blockPage.setLast_modified_time(LocalDateTime.now());
+			blockPageRepository.save(blockPage);
+		}
+		return new ApiResponse<>(ResponseCode.SUCCESS, blockId);
+	}
+
+	@Override
+	public ApiResponse deleteBlockPage(String blockId) {
+
+		Optional<BlockPage> blockPageList = blockPageRepository.findById(blockId);
+		System.out.println("blockPageList = " + blockPageList);
+
+		if(blockPageList.isEmpty()){
+			throw new BlockPageNotFoundException(blockId);
+		}else{
+			BlockPage blockPage = blockPageList.get();
+			blockPageRepository.deleteAllById(blockPage.getBlockList());
+			blockPageRepository.deleteById(blockId);
+		}
+
+		return new ApiResponse<>(ResponseCode.SUCCESS, blockId);
 	}
 }
-
-
-
-/* json형태??
-*
-*
-* {
-  "block_list": [
-  {
-    "type": "text",
-    "id": "uuid"
-  },
-  {
-    "type": "text",
-    "id": "uuid"
-  },
-{
-    "type": "page",
-    "id": "page_uuid"
-  }
-  ]
-
-}
-
-
-{
-  "page_list": [
-    "page_uuid1",
-    "page_uuid2"
-  ]
-
-}
-*
-*
-* */
