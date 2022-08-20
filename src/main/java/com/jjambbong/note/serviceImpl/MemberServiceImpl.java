@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
 import com.jjambbong.note.common.error.exception.BusinessException;
-import com.jjambbong.note.common.error.exception.code.UserErrorCode;
+import com.jjambbong.note.common.error.exception.member.MemberErrorCode;
 import com.jjambbong.note.common.error.exception.member.MemberNotFoundException;
 import com.jjambbong.note.dto.MemberDto;
 import com.jjambbong.note.entity.Member;
@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
 			try {
 				memberRepository.save(member);
 			} catch (Exception e) {
-				throw new BusinessException(UserErrorCode.UNKNOWN, e.getMessage());
+				throw new BusinessException(MemberErrorCode.UNKNOWN, e.getMessage());
 			}
 			return new ApiResponse<>(ResponseCode.SUCCESS, member.getMemberId().toString());
 		}
