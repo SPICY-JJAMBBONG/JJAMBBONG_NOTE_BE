@@ -1,10 +1,10 @@
 package com.jjambbong.note.common.error.exception.member;
 
-import com.jjambbong.note.common.error.exception.EntityNotFoundException;
+import com.jjambbong.note.common.error.exception.BusinessException;
 
-public class MemberNotFoundException extends EntityNotFoundException {
+public class MemberNotFoundException extends BusinessException {
 
 	public MemberNotFoundException(Long target) {
-		super(target + " is not found");
+		super(MemberErrorCode.UNKNOWN_USER,target + " is not found");
 	}
 }
