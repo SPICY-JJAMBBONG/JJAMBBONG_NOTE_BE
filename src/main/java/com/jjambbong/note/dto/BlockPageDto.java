@@ -10,8 +10,8 @@ import lombok.Data;
 public class BlockPageDto {
 	private String id;
 	private String type;
-	private List<String> block_list;
+	private List<String> blockList;
 	private String title;
 	private Long order;
-	private LocalDateTime last_modified_time;
+	private LocalDateTime lastModifiedTime;
 }

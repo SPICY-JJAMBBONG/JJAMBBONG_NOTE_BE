@@ -46,23 +46,22 @@ public class BlockPageServiceImpl implements BlockPageService {
 	}
 
 	@Override
-	public ApiResponse updateBlockPage(BlockPageDto blockPageDto, String blockId) {
+	public ApiResponse updateBlockPage(BlockPageDto blockPageDto, String blockId){
 
 		Optional<BlockPage> blockPageList = blockPageRepository.findById(blockId);
-
-		Long order = blockPageDto.getOrder();
-		System.out.println("order = " + order);
-		System.out.println("blockPageDto = " + blockPageDto);
 
 		if(blockPageList.isEmpty()){
 			throw new BlockPageNotFoundException(blockId);
 		}else{
 			BlockPage blockPage = blockPageList.get();
-			blockPage.setBlockList(blockPageDto.getBlock_list());
+			//blockPage.setBlockList(blockPageDto.getBlockList());
+			blockPage.setBlockList( (blockPageDto.getBlockList().isEmpty()) ? blockPage.getBlockList() : blockPageDto.getBlockList());
 			// blockPage.setOrder( (blockPageDto.getOrder() == null) ? blockPage.getOrder() : blockPageDto.getOrder());
 			blockPage.setOrder(blockPageDto.getOrder());
-			blockPage.setTitle(blockPageDto.getTitle());
-			blockPage.setLast_modified_time(LocalDateTime.now());
+			//blockPage.setTitle(blockPageDto.getTitle());
+			blockPage.setTitle( (blockPageDto.getTitle().equals(" ")) ? blockPage.getTitle() : blockPageDto.getTitle());
+
+			blockPage.setLastModifiedTime(LocalDateTime.now());
 			blockPageRepository.save(blockPage);
 		}
 		return new ApiResponse<>(ResponseCode.SUCCESS, blockId);
@@ -72,7 +71,6 @@ public class BlockPageServiceImpl implements BlockPageService {
 	public ApiResponse deleteBlockPage(String blockId) {
 
 		Optional<BlockPage> blockPageList = blockPageRepository.findById(blockId);
-		System.out.println("blockPageList = " + blockPageList);
 
 		if(blockPageList.isEmpty()){
 			throw new BlockPageNotFoundException(blockId);

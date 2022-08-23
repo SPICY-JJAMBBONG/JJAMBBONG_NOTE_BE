@@ -26,18 +26,14 @@ public class BlockPage {
 	@Builder.Default
 	private String type = "page";
 
-	@Column(name = "block_list")
 	@NonNull
 	@Builder.Default
 	private List<String> blockList = new ArrayList<>();
 
-	@Column(name = "title")
 	private String title;
 
-	@Column(name = "order")
 	private long order;
 
-	@Column(name = "last_modified_time")
-	private LocalDateTime last_modified_time;
+	private LocalDateTime lastModifiedTime;
 
 }
