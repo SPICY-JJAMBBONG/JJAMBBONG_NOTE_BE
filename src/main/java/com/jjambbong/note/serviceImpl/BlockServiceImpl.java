@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
-import com.jjambbong.note.common.error.exception.BusinessException;
-import com.jjambbong.note.common.error.exception.block.BlockErrorCode;
-import com.jjambbong.note.common.error.exception.block.BlockNotFoundException;
 import com.jjambbong.note.dto.BlockDto;
 import com.jjambbong.note.entity.Block;
 import com.jjambbong.note.repository.BlockRepository;
@@ -31,7 +28,7 @@ public class BlockServiceImpl implements BlockService {
 	public ApiResponse<String> createBlock(BlockDto blockDto) {
 
 		if(blockDto.getType() == null)
-			throw new BusinessException(BlockErrorCode.MISSDATA);
+			throw new RuntimeException("Type data is not defined");
 
 		Block block = Block.builder()
 			.id(blockDto.getId())
@@ -51,7 +48,7 @@ public class BlockServiceImpl implements BlockService {
 	public ApiResponse<String> updateBlock(BlockDto blockDto, String id) {
 
 		if(!isVerify(blockDto)) // 타입에 따른 데이터 정합성 체크
-			throw new BusinessException(BlockErrorCode.NOTFITDATA);
+			throw new RuntimeException("The data is not verified");
 
 		Block block = getBlockFromBlockId(id);
 
@@ -116,7 +113,7 @@ public class BlockServiceImpl implements BlockService {
 		Optional<Block> blockOptional = blockRepository.findById(id);
 
 		if(blockOptional.isEmpty()){
-			throw new BlockNotFoundException(id);
+			throw new RuntimeException(id+"is not found");
 		}
 
 		return blockOptional.get();
@@ -128,7 +125,7 @@ public class BlockServiceImpl implements BlockService {
 			String blockId = blockRepository.save(block).getId();
 			return new ApiResponse<>(ResponseCode.SUCCESS, blockId);
 		} catch (Exception e) {
-			throw new BusinessException(BlockErrorCode.UNKNOWN, e.getMessage());
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 }
