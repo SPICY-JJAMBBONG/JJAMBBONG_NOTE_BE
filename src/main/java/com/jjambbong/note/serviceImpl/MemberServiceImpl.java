@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
-import com.jjambbong.note.common.error.exception.BusinessException;
-import com.jjambbong.note.common.error.exception.member.MemberErrorCode;
-import com.jjambbong.note.common.error.exception.member.MemberNotFoundException;
 import com.jjambbong.note.dto.MemberDto;
 import com.jjambbong.note.entity.Member;
 import com.jjambbong.note.repository.MemberRepository;
@@ -36,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 			try {
 				memberRepository.save(member);
 			} catch (Exception e) {
-				throw new BusinessException(MemberErrorCode.UNKNOWN, e.getMessage());
+				throw new RuntimeException(e.getMessage());
 			}
 			return new ApiResponse<>(ResponseCode.SUCCESS, member.getMemberId().toString());
 		}
@@ -72,13 +69,12 @@ public class MemberServiceImpl implements MemberService {
 		Optional<Member> member = findMember(memberId);
 
 		if (member.isEmpty()) {
-			throw new MemberNotFoundException(memberId);
-			//return new ApiResponse<>(ResponseCode.UNKNOWN_USER, ResponseCode.UNKNOWN_USER.getMessage());
+			return new ApiResponse<>(ResponseCode.UNKNOWN_USER, ResponseCode.UNKNOWN_USER.getMessage());
 		} else {
 			try {
 				memberRepository.deleteById(memberId);
 			} catch (Exception e) {
-				throw new MemberNotFoundException(memberId);
+				throw new RuntimeException(e.getMessage());
 			}
 			return new ApiResponse<>(ResponseCode.SUCCESS, memberId);
 		}
@@ -98,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
 
 			return new ApiResponse<>(ResponseCode.SUCCESS, map);
 		} catch (Exception e) {
-			throw new MemberNotFoundException(memberId);
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 }
