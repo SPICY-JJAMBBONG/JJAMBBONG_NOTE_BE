@@ -12,6 +12,7 @@ public class BlockPageDto {
 	private String type;
 	private List<String> blockList;
 	private String title;
-	private Long order;
+	private Double order;
+	private int indent;
 	private LocalDateTime lastModifiedTime;
 }
