@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,30 +17,24 @@ import lombok.ToString;
 @Data
 @ToString
 @Document(collection = "tb_block")
-public class Block {
+public class BlockPage {
 
 	@Id
 	private String id;
 
 	private String type;
 
-	private long order;
+	private Double order;
 
 	private LocalDateTime lastModifiedTime;
 
+	private int indent;
 
 	//page
 	@Builder.Default
 	private List<String> blockList = new ArrayList<>();
 
 	private String title;
-
-
-	//text
-	private String content;
-
-	@Builder.Default
-	private List<String> style = new ArrayList<>();
 
 
 }

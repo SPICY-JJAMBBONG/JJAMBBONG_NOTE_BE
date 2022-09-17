@@ -6,17 +6,12 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class BlockDto{
+public class BlockTextDto {
 	private String id;
 	private String type;
-	private LocalDateTime lastModifiedTime;
-	private Long order;
-
-	//page
-	private List<String> blockList;
-	private String title;
-
-	//text
-	private String content;
 	private List<String> style;
+	private String content;
+	private Double order;
+	private int indent;
+	private LocalDateTime lastModifiedTime;
 }
