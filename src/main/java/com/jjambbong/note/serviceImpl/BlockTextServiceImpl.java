@@ -27,8 +27,11 @@ public class BlockTextServiceImpl implements BlockTextService {
 	@Override
 	public ApiResponse<String> createBlockText(BlockTextDto blockTextDto) {
 
-		if(blockTextDto.getType().equals("text")) //type 잘못된 값이면 block 생성x
+		if(blockTextDto.getType() == "text") //type 잘못된 값이면 block 생성x
 			throw new RuntimeException("Type data is not correct");
+
+		if(!blockTextRepository.findById(blockTextDto.getId()).isEmpty())
+			throw new RuntimeException("The Text ID already exists");
 
 		BlockText blockText = BlockText.builder() // id/type/order 정보로 새로운 BlockText 생성
 			.id(blockTextDto.getId())

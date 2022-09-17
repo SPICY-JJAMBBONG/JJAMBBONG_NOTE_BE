@@ -27,10 +27,10 @@ public class BlockPageServiceImpl implements BlockPageService {
 	@Override
 	public ApiResponse<String> createBlockPage(BlockPageDto blockPageDto) {
 
-		if(blockPageDto.getType().equals("page")) //type 잘못된 값이면 block 생성x
+		if(blockPageDto.getType() == "page") //type 잘못된 값이면 block 생성x
 			throw new RuntimeException("Type data is not correct");
 
-		if(!blockPageRepository.findById(blockPageDto.getId()).isPresent())
+		if(!blockPageRepository.findById(blockPageDto.getId()).isEmpty())
 			throw new RuntimeException("The Page ID already exists");
 
 		BlockPage blockPage = BlockPage.builder() // id/type/order 정보로 새로운 BlockPage 생성
