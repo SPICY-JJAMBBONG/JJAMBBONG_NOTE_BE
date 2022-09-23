@@ -1,12 +1,9 @@
 package com.jjambbong.note.entity;
 
 // import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-import javax.persistence.Column;
 import javax.persistence.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -40,9 +37,11 @@ public class BlockPage {
 
 	private String title;
 
-	public HashMap toHashMap() {
+	public HashMap toMap() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		HashMap<String, Object> map = objectMapper.convertValue(this, HashMap.class);
-		return map;
+		// Date Format 설정
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+		objectMapper.setDateFormat(dateFormat);
+		return objectMapper.convertValue(this, HashMap.class);
 	}
 }
