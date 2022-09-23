@@ -1,6 +1,7 @@
 package com.jjambbong.note.serviceImpl;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class BlockTextServiceImpl implements BlockTextService {
 			.type(blockTextDto.getType())
 			.order(blockTextDto.getOrder())
 			.indent(blockTextDto.getIndent())
-			.lastModifiedTime(LocalDateTime.now()).build();
+			.lastModifiedTime(new Date()).build();
 
 		return saveBlockText(blockText);
 	}
@@ -59,7 +60,7 @@ public class BlockTextServiceImpl implements BlockTextService {
 		//공통 수정 : order, indent,lastModifiedTime
 		blockText.setOrder( (blockTextDto.getOrder() == null) ? blockText.getOrder() : blockTextDto.getOrder());
 		blockText.setIndent(blockText.getIndent());
-		blockText.setLastModifiedTime(LocalDateTime.now());
+		blockText.setLastModifiedTime(new Date());
 
 		return saveBlockText(blockText);
 	}
