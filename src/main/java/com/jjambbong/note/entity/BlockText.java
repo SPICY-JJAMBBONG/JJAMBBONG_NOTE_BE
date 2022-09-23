@@ -2,11 +2,16 @@ package com.jjambbong.note.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +30,7 @@ public class BlockText {
 
 	private Double order;
 
-	private LocalDateTime lastModifiedTime;
+	private Date lastModifiedTime;
 
 	private int indent;
 
@@ -35,5 +40,9 @@ public class BlockText {
 	@Builder.Default
 	private List<String> style = new ArrayList<>();
 
-
+	public HashMap toHashMap() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		HashMap<String, Object> map = objectMapper.convertValue(this, HashMap.class);
+		return map;
+	}
 }
