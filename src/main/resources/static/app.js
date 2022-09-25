@@ -18,7 +18,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         // /topic/receive/test에 구독 하고 있는 페이지들에 데이터 전송
-        stompClient.subscribe('/topic/receive/test', function (document) {
+        stompClient.subscribe('/sub/receive/test', function (document) {
             console.log(document)
             console.log(document.body)
             let data = JSON.parse(document.body)
