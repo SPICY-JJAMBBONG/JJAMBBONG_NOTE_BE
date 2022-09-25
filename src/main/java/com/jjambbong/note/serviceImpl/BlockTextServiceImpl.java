@@ -64,6 +64,10 @@ public class BlockTextServiceImpl implements BlockTextService {
 
 		return saveBlockText(blockText);
 	}
+	@Override
+	public ApiResponse<String> updateBlockText(BlockText blockText, String id) {
+		return saveBlockText(blockText);
+	}
 
 
 	@Override

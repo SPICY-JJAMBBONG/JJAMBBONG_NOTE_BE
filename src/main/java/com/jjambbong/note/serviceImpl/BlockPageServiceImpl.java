@@ -67,6 +67,10 @@ public class BlockPageServiceImpl implements BlockPageService {
 		return saveBlockPage(blockPage);
 	}
 
+	@Override
+	public ApiResponse<String> updateBlockPage(BlockPage blockPage, String id) {
+		return saveBlockPage(blockPage);
+	}
 
 	@Override
 	public ApiResponse<String> deleteBlockPage(String id) {

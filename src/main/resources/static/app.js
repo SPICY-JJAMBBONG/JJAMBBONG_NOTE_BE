@@ -13,13 +13,15 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('/block-ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         // /topic/receive/test에 구독 하고 있는 페이지들에 데이터 전송
-        stompClient.subscribe('/topic/receive/test', function (document) {
-            let data = JSON.parse(document.body).content
+        stompClient.subscribe('/sub/receive/test', function (document) {
+            console.log(document)
+            console.log(document.body)
+            let data = JSON.parse(document.body)
             let content = JSON.parse(data).content
             $("#test").val(content)
         });
@@ -37,7 +39,7 @@ function disconnect() {
 function sendContent() {
     let content = JSON.stringify({'content': $("#test").val()})
     // /topic/send 경로로 websocket 호출
-    stompClient.send("/topic/send/test", {}, content);
+    stompClient.send("/app/send/test", {}, content);
 }
 
 
