@@ -3,6 +3,7 @@ package com.jjambbong.note.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jjambbong.note.entity.Block;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,20 +42,18 @@ public class BlockPageController {
 	}
 
 	@GetMapping(path = "/api/block/page/{id}/all")
-	public Map<String, Map> getBlockAll(@PathVariable String id){
+	public Map<String, Block> getBlockAll(@PathVariable String id){
 
 		// List<String> blockDetailList = new ArrayList<String>();
-		Map<String, Map> blockDetailList = new HashMap<>();
+		Map<String, Block> blockDetailList = new HashMap<>();
 
 		BlockPage blockPage = blockPageService.getBlockPage(id);
 
 		for(String blockId : blockPage.getBlockList()){
 			if(blockId.contains("page")) //blockList에 page가 있다면
-				// blockDetailList.add(blockPageService.getBlockPage(id).toString());
-				blockDetailList.put(blockId, blockPageService.getBlockPage(blockId).toMap());
-			else
-				// blockDetailList.add(blockTextService.getBlockText(id).toString());
-				blockDetailList.put(blockId, blockTextService.getBlockText(id).toMap());
+				blockDetailList.put(blockId, blockPageService.getBlockPage(blockId));
+			else if(blockId.contains("text"))
+				blockDetailList.put(blockId, blockTextService.getBlockText(blockId));
 		}
 
 		return blockDetailList;
