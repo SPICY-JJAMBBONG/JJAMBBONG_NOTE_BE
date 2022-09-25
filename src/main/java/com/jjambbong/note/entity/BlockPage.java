@@ -1,6 +1,5 @@
 package com.jjambbong.note.entity;
 
-// import java.time.LocalDateTime;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -18,16 +17,16 @@ import lombok.ToString;
 @Data
 @ToString
 @Document(collection = "tb_block")
-public class BlockPage {
+public class BlockPage implements Block{
 
 	@Id
 	private String id;
 
 	private String type;
 
-	private Double order;
-
 	private Date lastModifiedTime;
+
+	private Double order;
 
 	private int indent;
 

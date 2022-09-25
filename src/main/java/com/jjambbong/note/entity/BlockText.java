@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.persistence.Id;
 
+import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,16 +18,16 @@ import lombok.ToString;
 @Data
 @ToString
 @Document(collection = "tb_block")
-public class BlockText {
+public class BlockText implements Block{
 
 	@Id
 	private String id;
 
 	private String type;
 
-	private Double order;
-
 	private Date lastModifiedTime;
+
+	private Double order;
 
 	private int indent;
 
