@@ -8,5 +8,6 @@ public interface BlockPageService {
 	ApiResponse<String> createBlockPage(BlockPageDto blockPageDto);
 	BlockPage getBlockPage(String id);
 	ApiResponse<String> updateBlockPage(BlockPageDto blockPageDto, String id);
+	ApiResponse<String> updateBlockPage(BlockPage blockPage, String id);
 	ApiResponse<String> deleteBlockPage(String id);
 }

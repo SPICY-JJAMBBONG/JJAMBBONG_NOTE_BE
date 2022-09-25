@@ -3,16 +3,13 @@ package com.jjambbong.note.entity;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import lombok.Getter;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
 
 @Builder
 @Data
