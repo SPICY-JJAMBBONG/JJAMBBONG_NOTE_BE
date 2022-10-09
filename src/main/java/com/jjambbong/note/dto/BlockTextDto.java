@@ -1,6 +1,7 @@
 package com.jjambbong.note.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -13,5 +14,5 @@ public class BlockTextDto {
 	private String content;
 	private Double order;
 	private int indent;
-	private LocalDateTime lastModifiedTime;
+	private Date lastModifiedTime;
 }

@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
+import com.jjambbong.note.dto.BlockDto;
 import com.jjambbong.note.dto.BlockTextDto;
 import com.jjambbong.note.entity.BlockText;
+import com.jjambbong.note.mapper.BlockMapper;
 import com.jjambbong.note.repository.BlockTextRepository;
 import com.jjambbong.note.service.BlockTextService;
 
@@ -25,10 +27,13 @@ public class BlockTextServiceImpl implements BlockTextService {
 	@Autowired
 	private final BlockTextRepository blockTextRepository;
 
+	@Autowired
+	BlockMapper blockMapper;
+
 	@Override
 	public ApiResponse<String> createBlockText(BlockTextDto blockTextDto) {
 
-		if(blockTextDto.getType() == "text") //type 잘못된 값이면 block 생성x
+		if(blockTextDto.getType() != "text") //type 잘못된 값이면 block 생성x
 			throw new RuntimeException("Type data is not correct");
 
 		if(!blockTextRepository.findById(blockTextDto.getId()).isEmpty())
@@ -65,8 +70,16 @@ public class BlockTextServiceImpl implements BlockTextService {
 		return saveBlockText(blockText);
 	}
 	@Override
-	public ApiResponse<String> updateBlockText(BlockText blockText, String id) {
-		return saveBlockText(blockText);
+	public ApiResponse<String> updateBlockText(BlockDto blockDto, String id) {
+		//신규id면 create
+		if(blockTextRepository.findById(blockDto.getId()).isEmpty())
+			return saveBlockText(blockMapper.BlockDtoToBlockText(blockDto));
+			//blockList 없으면 delete
+		else if (blockDto.getBlockList().isEmpty())
+			return deleteBlockText(id);
+			//있으면 update
+		else
+			return updateBlockText(blockMapper.BlockDtoToBlockTextDto(blockDto), id);
 	}
 
 

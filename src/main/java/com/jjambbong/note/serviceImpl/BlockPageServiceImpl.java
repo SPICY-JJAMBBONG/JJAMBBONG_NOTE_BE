@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jjambbong.note.common.ApiResponse;
 import com.jjambbong.note.common.ResponseCode;
+import com.jjambbong.note.dto.BlockDto;
 import com.jjambbong.note.dto.BlockPageDto;
 import com.jjambbong.note.entity.BlockPage;
+import com.jjambbong.note.mapper.BlockMapper;
 import com.jjambbong.note.repository.BlockPageRepository;
 import com.jjambbong.note.service.BlockPageService;
 
@@ -25,23 +27,35 @@ public class BlockPageServiceImpl implements BlockPageService {
 	@Autowired
 	private final BlockPageRepository blockPageRepository;
 
-	@Override
-	public ApiResponse<String> createBlockPage(BlockPageDto blockPageDto) {
+	@Autowired
+	BlockMapper blockMapper;
 
-		if(blockPageDto.getType() == "page") //type 잘못된 값이면 block 생성x
-			throw new RuntimeException("Type data is not correct");
+	@Override
+	public ApiResponse<String> createBlock(BlockDto blockDto) {
+
+		convertTo(blockDto);
+
+		// if(blockPageDto.getType() != "page") //type 잘못된 값이면 block 생성x
+		// 	throw new RuntimeException("Type data is not correct");
 
 		if(!blockPageRepository.findById(blockPageDto.getId()).isEmpty())
 			throw new RuntimeException("The Page ID already exists");
 
-		BlockPage blockPage = BlockPage.builder() // id/type/order 정보로 새로운 BlockPage 생성
-			.id(blockPageDto.getId())
-			.type(blockPageDto.getType())
-			.order(blockPageDto.getOrder())
-			.indent(blockPageDto.getIndent())
-			.lastModifiedTime(new Date()).build();
+		// BlockPage blockPage = BlockPage.builder() // id/type/order 정보로 새로운 BlockPage 생성
+		// 	.id(blockPageDto.getId())
+		// 	.type(blockPageDto.getType())
+		// 	.order(blockPageDto.getOrder())
+		// 	.indent(blockPageDto.getIndent())
+		// 	.lastModifiedTime(new Date()).build();
+
+		blockMapper.
 
 		return saveBlockPage(blockPage);
+	}
+
+	private void convertTo(BlockDto blockDto) {
+		if(blockDto.getType()=="page")
+			createBlockPage();
 	}
 
 	@Override
@@ -68,8 +82,17 @@ public class BlockPageServiceImpl implements BlockPageService {
 	}
 
 	@Override
-	public ApiResponse<String> updateBlockPage(BlockPage blockPage, String id) {
-		return saveBlockPage(blockPage);
+	public ApiResponse<String> updateBlockPage(BlockDto blockDto, String id) {
+
+		//신규id면 create
+		if(blockPageRepository.findById(blockDto.getId()).isEmpty())
+		 	return saveBlockPage(blockMapper.BlockDtoToBlockPage(blockDto));
+		//blockList 없으면 delete
+		else if (blockDto.getBlockList().isEmpty())
+			return deleteBlockPage(id);
+		//있으면 update
+		else
+			return updateBlockPage(blockMapper.BlockDtoToBlockPageDto(blockDto), id);
 	}
 
 	@Override

@@ -23,9 +23,6 @@ public class BlockPageWServiceImpl implements BlockPageWService {
     static Date lastSavedTime = new Date();
 
     @Autowired
-    BlockMapper blockMapper;
-
-    @Autowired
     BlockPageService blockPageService;
     @Autowired
     BlockTextService blockTextService;
@@ -35,13 +32,13 @@ public class BlockPageWServiceImpl implements BlockPageWService {
         // TODO: 여기서 line 22에 new ConcurrentHashMap<>()을 해주지 않으면 nullPointException이 뜸 - 사유 확인 필요
         map.put(blockDto.getId(), blockDto);
         Date currentTime = new Date();
-        if ((currentTime.getTime() - lastSavedTime.getTime())/1000 > 5) {
-            saveBlock(currentTime);
-        }
+        //if ((currentTime.getTime() - lastSavedTime.getTime())/1000 > 5) {
+        saveBlock(currentTime);
+        //}
     }
 
     // TODO: 현재는 새로운 transferBlockToMap 함수가 호출됐을때만 호출되지만, 그렇지 않은 상황에서도 주기적으로 호출될수 있도록 개선 필요
-    // TODO: 새로운 block을 create 할지말지 결정하는 로직을 여기에 넣을지 BlockPageServiceImpl/BlockTextServiceImpl에 넣을지
+    // TODO: 새로운 block을 create 할지말지 결정하는 로직을 여기에 넣을지 BlockPageServiceImpl/BlockTextServiceImpl에 넣을지 => ServiceImple에 넣기
     public synchronized void saveBlock(Date currentTime) {
         System.out.println("map = " + map);
         // 배치 돌리는 부분
@@ -49,11 +46,11 @@ public class BlockPageWServiceImpl implements BlockPageWService {
             // API
             // TODO: db 저장에 실패했을때, 소켓으로 이미 보내진 정보를 다시 원래 정보로 rollback 할수있는 방안 필요
             if(blockId.contains("page")){
-                BlockPage blockPage = blockMapper.BlockDtoToBlockPage(map.remove(blockId));
-                blockPageService.updateBlockPage(blockPage, blockId);
+                //BlockPage blockPage = blockMapper.BlockDtoToBlockPage();
+                blockPageService.updateBlockPage(map.remove(blockId), blockId);
             } else if(blockId.contains("text")){
-                BlockText blockText = blockMapper.BlockDtoToBlockText(map.remove(blockId));
-                blockTextService.updateBlockText(blockText, blockId);
+                //BlockText blockText = blockMapper.BlockDtoToBlockText(map.remove(blockId));
+                blockTextService.updateBlockText(map.remove(blockId), blockId);
             }
         }
         lastSavedTime = new Date();

@@ -1,7 +1,9 @@
 package com.jjambbong.note.mapper;
 
 import com.jjambbong.note.dto.BlockDto;
+import com.jjambbong.note.dto.BlockTextDto;
 import com.jjambbong.note.entity.BlockPage;
+import com.jjambbong.note.dto.BlockPageDto;
 import com.jjambbong.note.entity.BlockText;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,9 @@ public class BlockMapper {
         return modelMapper.map(blockPage, BlockDto.class);
     }
 
-    public BlockDto BlockTextToBlockDto (BlockText blockText) {
-        return modelMapper.map(blockText, BlockDto.class);
-    }
+    public BlockDto BlockTextToBlockDto (BlockText blockText) { return modelMapper.map(blockText, BlockDto.class); }
 
+    public BlockPageDto BlockDtoToBlockPageDto (BlockDto blockDto) { return modelMapper.map(blockDto, BlockPageDto.class); }
+
+    public BlockTextDto BlockDtoToBlockTextDto (BlockDto blockDto) { return modelMapper.map(blockDto, BlockTextDto.class); }
 }

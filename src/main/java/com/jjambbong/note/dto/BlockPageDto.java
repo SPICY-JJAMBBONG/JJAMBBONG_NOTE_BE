@@ -14,5 +14,5 @@ public class BlockPageDto {
 	private String title;
 	private Double order;
 	private int indent;
-	private LocalDateTime lastModifiedTime;
+	private Date lastModifiedTime;
 }
