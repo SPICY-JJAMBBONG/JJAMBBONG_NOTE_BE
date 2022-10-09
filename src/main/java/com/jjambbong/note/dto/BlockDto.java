@@ -3,6 +3,7 @@ package com.jjambbong.note.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,4 +17,6 @@ public class BlockDto {
     private LocalDateTime lastModifiedTime;
     private List<String> style;
     private String content;
+    private String url;
+    private String altText;
 }
