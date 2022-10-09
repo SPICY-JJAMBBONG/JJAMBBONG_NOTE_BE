@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Builder
 @Data
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "tb_block")
 public class BlockText implements Block{
 
