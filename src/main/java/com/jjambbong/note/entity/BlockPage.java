@@ -36,11 +36,11 @@ public class BlockPage implements Block{
 
 	private String title;
 
-	public HashMap toMap() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		// Date Format 설정
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
-		objectMapper.setDateFormat(dateFormat);
-		return objectMapper.convertValue(this, HashMap.class);
-	}
+//	public HashMap toMap() {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		// Date Format 설정
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+//		objectMapper.setDateFormat(dateFormat);
+//		return objectMapper.convertValue(this, HashMap.class);
+//	}
 }
