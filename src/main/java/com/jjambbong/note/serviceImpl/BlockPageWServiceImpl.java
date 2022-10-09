@@ -41,22 +41,21 @@ public class BlockPageWServiceImpl implements BlockPageWService {
     }
 
     // TODO: 현재는 새로운 transferBlockToMap 함수가 호출됐을때만 호출되지만, 그렇지 않은 상황에서도 주기적으로 호출될수 있도록 개선 필요
+    // TODO: 새로운 block을 create 할지말지 결정하는 로직을 여기에 넣을지 BlockPageServiceImpl/BlockTextServiceImpl에 넣을지
     public synchronized void saveBlock(Date currentTime) {
-        System.out.println(currentTime.getTime() - lastSavedTime.getTime());
-        if ((currentTime.getTime() - lastSavedTime.getTime())/1000 > 10) {
-            System.out.println("map = " + map);
-            // 배치 돌리는 부분
-            for(String blockId : map.keySet()){
-                // API
-                if(blockId.contains("page")){
-                    BlockPage blockPage = blockMapper.BlockDtoToBlockPage(map.remove(blockId));
-                    blockPageService.updateBlockPage(blockPage, blockId);
-                } else if(blockId.contains("text")){
-                    BlockText blockText = blockMapper.BlockDtoToBlockText(map.remove(blockId));
-                    blockTextService.updateBlockText(blockText, blockId);
-                }
+        System.out.println("map = " + map);
+        // 배치 돌리는 부분
+        for(String blockId : map.keySet()){
+            // API
+            // TODO: db 저장에 실패했을때, 소켓으로 이미 보내진 정보를 다시 원래 정보로 rollback 할수있는 방안 필요
+            if(blockId.contains("page")){
+                BlockPage blockPage = blockMapper.BlockDtoToBlockPage(map.remove(blockId));
+                blockPageService.updateBlockPage(blockPage, blockId);
+            } else if(blockId.contains("text")){
+                BlockText blockText = blockMapper.BlockDtoToBlockText(map.remove(blockId));
+                blockTextService.updateBlockText(blockText, blockId);
             }
-            lastSavedTime = new Date();
         }
+        lastSavedTime = new Date();
     }
 }

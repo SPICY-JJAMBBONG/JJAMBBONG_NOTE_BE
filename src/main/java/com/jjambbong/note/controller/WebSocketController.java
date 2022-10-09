@@ -22,18 +22,13 @@ public class WebSocketController {
 	@Autowired
 	private BlockPageWService blockPageWService;
 
+	// TODO: command, header, body 쓰는 방법 찾아서 적용하기
 	@MessageMapping("/block/{page_id}")
 	public void updateBlock(@DestinationVariable("page_id") Long pageId, BlockDto blockDto) throws Exception {
 		template.convertAndSend("/sub/block/" + pageId, blockDto);
 		System.out.println("blockDto = " + blockDto);
 		blockPageWService.transferBlockToMap(blockDto);
 	}
-
-
-//	@MessageMapping("/block/{block_id}/delete")
-//
-//
-//	@MessageMapping("/block/<page_id>/reorder")
 
 
 	public void createBlockService(BlockPageDto blockPageDto) throws InterruptedException {
