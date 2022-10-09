@@ -1,8 +1,6 @@
 package com.jjambbong.note.serviceImpl;
 
 import com.jjambbong.note.dto.BlockDto;
-import com.jjambbong.note.dto.BlockPageDto;
-import com.jjambbong.note.entity.Block;
 import com.jjambbong.note.entity.BlockPage;
 import com.jjambbong.note.entity.BlockText;
 import com.jjambbong.note.mapper.BlockMapper;
@@ -12,7 +10,6 @@ import com.jjambbong.note.service.BlockTextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -49,10 +46,10 @@ public class BlockPageWServiceImpl implements BlockPageWService {
             // API
             // TODO: db 저장에 실패했을때, 소켓으로 이미 보내진 정보를 다시 원래 정보로 rollback 할수있는 방안 필요
             if(blockId.contains("page")){
-                BlockPage blockPage = blockMapper.BlockDtoToBlockPage(map.remove(blockId));
+                BlockPage blockPage = blockMapper.blockDtoToBlockPage(map.remove(blockId));
                 blockPageService.updateBlockPage(blockPage, blockId);
             } else if(blockId.contains("text")){
-                BlockText blockText = blockMapper.BlockDtoToBlockText(map.remove(blockId));
+                BlockText blockText = blockMapper.blockDtoToBlockText(map.remove(blockId));
                 blockTextService.updateBlockText(blockText, blockId);
             }
         }
