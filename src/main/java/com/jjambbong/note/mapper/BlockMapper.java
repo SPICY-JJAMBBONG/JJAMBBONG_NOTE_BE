@@ -2,6 +2,8 @@ package com.jjambbong.note.mapper;
 
 import com.jjambbong.note.dto.BlockDto;
 import com.jjambbong.note.dto.BlockTextDto;
+import com.jjambbong.note.dto.BlockImageDto;
+import com.jjambbong.note.entity.BlockImage;
 import com.jjambbong.note.entity.BlockPage;
 import com.jjambbong.note.dto.BlockPageDto;
 import com.jjambbong.note.entity.BlockText;
@@ -15,24 +17,38 @@ public class BlockMapper {
     @Autowired
     ModelMapper modelMapper;
 
-    public BlockPage BlockDtoToBlockPage (BlockDto block) {
-        Class<BlockPage> blockPageClass = BlockPage.class;
-        BlockPage blockPage = modelMapper.map(block, BlockPage.class);
+    // DTO -> ENTITY
+    public BlockPage blockDtoToBlockPage(BlockDto block) {
         return modelMapper.map(block, BlockPage.class);
     }
 
-    public BlockText BlockDtoToBlockText (BlockDto block) {
+    public BlockText blockDtoToBlockText(BlockDto block) {
         return modelMapper.map(block, BlockText.class);
 
     }
 
-    public BlockDto BlockPageToBlockDto (BlockPage blockPage) {
-        return modelMapper.map(blockPage, BlockDto.class);
+    public BlockImage blockDtoToBlockImage(BlockDto block) {
+        return modelMapper.map(block, BlockImage.class);
     }
 
-    public BlockDto BlockTextToBlockDto (BlockText blockText) { return modelMapper.map(blockText, BlockDto.class); }
+    // BLOCKDTO -> BLOCK<TYPE>DTO
+    public BlockImageDto blockDtoToBlockImageDto (BlockDto block) {
+        return modelMapper.map(block, BlockImageDto.class);
+    }
+
+    // ENTITY -> DTO
+    public BlockDto blockPageToBlockDto(BlockPage blockPage) {
+        return modelMapper.map(blockPage, BlockDto.class);
+    }
 
     public BlockPageDto BlockDtoToBlockPageDto (BlockDto blockDto) { return modelMapper.map(blockDto, BlockPageDto.class); }
 
     public BlockTextDto BlockDtoToBlockTextDto (BlockDto blockDto) { return modelMapper.map(blockDto, BlockTextDto.class); }
+    public BlockDto blockTextToBlockDto(BlockText blockText) {
+        return modelMapper.map(blockText, BlockDto.class);
+    }
+
+    public BlockDto blockImageToBlockDto(BlockImage blockImage) {
+        return modelMapper.map(blockImage, BlockDto.class);
+    }
 }

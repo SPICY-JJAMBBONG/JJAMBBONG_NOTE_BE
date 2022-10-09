@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jjambbong.note.common.ApiResponse;
@@ -20,7 +21,7 @@ import com.jjambbong.note.service.BlockTextService;
 import lombok.RequiredArgsConstructor;
 
 @Transactional
-@Component
+@Service
 @RequiredArgsConstructor
 public class BlockTextServiceImpl implements BlockTextService {
 

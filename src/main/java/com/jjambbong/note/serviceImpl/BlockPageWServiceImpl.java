@@ -1,8 +1,6 @@
 package com.jjambbong.note.serviceImpl;
 
 import com.jjambbong.note.dto.BlockDto;
-import com.jjambbong.note.dto.BlockPageDto;
-import com.jjambbong.note.entity.Block;
 import com.jjambbong.note.entity.BlockPage;
 import com.jjambbong.note.entity.BlockText;
 import com.jjambbong.note.mapper.BlockMapper;
@@ -12,7 +10,6 @@ import com.jjambbong.note.service.BlockTextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
